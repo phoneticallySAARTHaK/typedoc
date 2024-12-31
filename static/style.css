@@ -641,6 +641,7 @@
 
     .tsd-breadcrumb {
         margin: 0;
+        margin-top: 1rem;
         padding: 0;
         color: var(--color-text-aside);
     }
@@ -1563,6 +1564,10 @@
             grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
             grid-template-areas: "sidebar content";
             --dim-container-main-margin-y: 2rem;
+        }
+
+        .tsd-breadcrumb {
+            margin-top: 0;
         }
 
         .col-sidebar {
