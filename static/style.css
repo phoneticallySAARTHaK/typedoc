@@ -1581,7 +1581,7 @@
     }
     @media (min-width: 770px) and (max-width: 1399px) {
         .col-sidebar {
-            max-height: calc(100vh - 2rem - 42px);
+            max-height: calc(100vh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
             overflow: auto;
             position: sticky;
             top: 42px;
@@ -1619,7 +1619,7 @@
 
         .page-menu,
         .site-menu {
-            max-height: calc(100vh - 2rem - 42px);
+            max-height: calc(100vh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
             overflow: auto;
             position: sticky;
             top: 42px;
