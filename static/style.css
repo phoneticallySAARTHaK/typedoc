@@ -442,7 +442,7 @@
     .container-main {
         margin: var(--dim-container-main-margin-y) auto;
         /* toolbar, footer, margin */
-        min-height: calc(100vh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
+        min-height: calc(100svh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
     }
 
     @keyframes fade-in {
@@ -1582,7 +1582,7 @@
     }
     @media (min-width: 770px) and (max-width: 1399px) {
         .col-sidebar {
-            max-height: calc(100vh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
+            max-height: calc(100svh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
             overflow: auto;
             position: sticky;
             top: calc(var(--dim-header-height) + 1px);
@@ -1620,7 +1620,7 @@
 
         .page-menu,
         .site-menu {
-            max-height: calc(100vh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
+            max-height: calc(100svh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
             overflow: auto;
             position: sticky;
             top: calc(var(--dim-header-height) + 1px);
