@@ -1299,6 +1299,7 @@
         box-sizing: border-box;
         line-height: 0;
         padding: 12px 0;
+        text-align: center;
     }
 
     .tsd-widget {
