@@ -1584,7 +1584,7 @@
             max-height: calc(100vh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
             overflow: auto;
             position: sticky;
-            top: 42px;
+            top: calc(var(--dim-header-height) + 1px);
         }
         .site-menu {
             margin-top: 1rem;
@@ -1622,7 +1622,7 @@
             max-height: calc(100vh - var(--dim-header-height) - var(--dim-footer-height) - 2 * var(--dim-container-main-margin-y));
             overflow: auto;
             position: sticky;
-            top: 42px;
+            top: calc(var(--dim-header-height) + 1px);
         }
     }
 }
