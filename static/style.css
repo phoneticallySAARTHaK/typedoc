@@ -895,7 +895,7 @@
     .tsd-navigation > a,
     .tsd-navigation .tsd-accordion-summary,
     .tsd-page-navigation .tsd-accordion-summary {
-        width: calc(100% - 0.25rem);
+        width: calc(100% - 0.5rem);
         display: flex;
         align-items: center;
     }
@@ -903,7 +903,7 @@
     .tsd-navigation summary > span,
     .tsd-page-navigation a {
         display: flex;
-        width: calc(100% - 0.25rem);
+        width: calc(100% - 0.5rem);
         align-items: center;
         padding: 0.25rem;
         color: var(--color-text);
