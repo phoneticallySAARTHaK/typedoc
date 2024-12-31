@@ -889,7 +889,8 @@
     }
 
     .tsd-navigation.settings {
-        margin: 1rem 0;
+        margin: 0;
+        margin-bottom: 1rem;
     }
     .tsd-navigation > a,
     .tsd-navigation .tsd-accordion-summary {
