@@ -94,10 +94,8 @@ export function settings(context: DefaultThemeRenderContext) {
         <div class="tsd-navigation settings">
             <details class="tsd-accordion" open={false}>
                 <summary class="tsd-accordion-summary">
-                    <h3>
-                        {context.icons.chevronDown()}
-                        {context.i18n.theme_settings()}
-                    </h3>
+                    {context.icons.chevronDown()}
+                    <h3>{context.i18n.theme_settings()}</h3>
                 </summary>
                 <div class="tsd-accordion-details">
                     {visibilityOptions.length && (
@@ -224,10 +222,8 @@ export function pageNavigation(context: DefaultThemeRenderContext, props: PageEv
     return (
         <details open={true} class="tsd-accordion tsd-page-navigation">
             <summary class="tsd-accordion-summary">
-                <h3>
-                    {context.icons.chevronDown()}
-                    {context.i18n.theme_on_this_page()}
-                </h3>
+                {context.icons.chevronDown()}
+                <h3>{context.i18n.theme_on_this_page()}</h3>
             </summary>
             <div class="tsd-accordion-details">{sections}</div>
         </details>

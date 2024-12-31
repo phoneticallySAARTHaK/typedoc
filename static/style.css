@@ -893,7 +893,8 @@
         margin-bottom: 1rem;
     }
     .tsd-navigation > a,
-    .tsd-navigation .tsd-accordion-summary {
+    .tsd-navigation .tsd-accordion-summary,
+    .tsd-page-navigation .tsd-accordion-summary {
         width: calc(100% - 0.25rem);
         display: flex;
         align-items: center;
