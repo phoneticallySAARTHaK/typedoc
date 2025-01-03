@@ -1595,7 +1595,9 @@
             );
             overflow: auto;
             position: sticky;
-            top: calc(var(--dim-header-height) + 1px);
+            top: calc(
+                var(--dim-header-height) + var(--dim-container-main-margin-y)
+            );
         }
         .site-menu {
             margin-top: 1rem;
@@ -1636,7 +1638,9 @@
             );
             overflow: auto;
             position: sticky;
-            top: calc(var(--dim-header-height) + 1px);
+            top: calc(
+                var(--dim-header-height) + var(--dim-container-main-margin-y)
+            );
         }
     }
 }
