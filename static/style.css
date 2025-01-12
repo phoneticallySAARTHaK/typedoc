@@ -1,4 +1,19 @@
 @layer typedoc {
+    /* Dimension variables */
+    :root {
+        --dim-toolbar-contents-height: 2.5rem;
+        --dim-toolbar-border-bottom-width: 1px;
+        --dim-header-height: calc(
+            var(--dim-toolbar-border-bottom-width) +
+                var(--dim-toolbar-contents-height)
+        );
+
+        /* 0rem For mobile; unit is required for calculation in `calc` */
+        --dim-container-main-margin-y: 0rem;
+
+        --dim-footer-height: 3.5rem;
+    }
+
     :root {
         /* Light */
         --light-color-background: #f2f4f8;
@@ -421,16 +436,19 @@
         border-top: 1px solid var(--color-accent);
         padding-top: 1rem;
         padding-bottom: 1rem;
-        max-height: 3.5rem;
+        max-height: var(--dim-footer-height);
     }
     footer > p {
         margin: 0 1em;
     }
 
     .container-main {
-        margin: 0 auto;
+        margin: var(--dim-container-main-margin-y) auto;
         /* toolbar, footer, margin */
-        min-height: calc(100vh - 41px - 56px - 4rem);
+        min-height: calc(
+            100svh - var(--dim-header-height) - var(--dim-footer-height) - 2 *
+                var(--dim-container-main-margin-y)
+        );
     }
 
     @keyframes fade-in {
@@ -629,6 +647,7 @@
 
     .tsd-breadcrumb {
         margin: 0;
+        margin-top: 1rem;
         padding: 0;
         color: var(--color-text-aside);
     }
@@ -876,11 +895,13 @@
     }
 
     .tsd-navigation.settings {
-        margin: 1rem 0;
+        margin: 0;
+        margin-bottom: 1rem;
     }
     .tsd-navigation > a,
-    .tsd-navigation .tsd-accordion-summary {
-        width: calc(100% - 0.25rem);
+    .tsd-navigation .tsd-accordion-summary,
+    .tsd-page-navigation .tsd-accordion-summary {
+        width: calc(100% - 0.5rem);
         display: flex;
         align-items: center;
     }
@@ -888,7 +909,7 @@
     .tsd-navigation summary > span,
     .tsd-page-navigation a {
         display: flex;
-        width: calc(100% - 0.25rem);
+        width: calc(100% - 0.5rem);
         align-items: center;
         padding: 0.25rem;
         color: var(--color-text);
@@ -1256,7 +1277,8 @@
         width: 100%;
         color: var(--color-text);
         background: var(--color-background-secondary);
-        border-bottom: 1px var(--color-accent) solid;
+        border-bottom: var(--dim-toolbar-border-bottom-width)
+            var(--color-accent) solid;
         transition: transform 0.3s ease-in-out;
     }
     .tsd-page-toolbar a {
@@ -1272,7 +1294,7 @@
     .tsd-page-toolbar .tsd-toolbar-contents {
         display: flex;
         justify-content: space-between;
-        height: 2.5rem;
+        height: var(--dim-toolbar-contents-height);
         margin: 0 auto;
     }
     .tsd-page-toolbar .table-cell {
@@ -1287,6 +1309,7 @@
         box-sizing: border-box;
         line-height: 0;
         padding: 12px 0;
+        text-align: center;
     }
 
     .tsd-widget {
@@ -1549,7 +1572,11 @@
             display: grid;
             grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
             grid-template-areas: "sidebar content";
-            margin: 2rem auto;
+            --dim-container-main-margin-y: 2rem;
+        }
+
+        .tsd-breadcrumb {
+            margin-top: 0;
         }
 
         .col-sidebar {
@@ -1562,11 +1589,15 @@
     }
     @media (min-width: 770px) and (max-width: 1399px) {
         .col-sidebar {
-            max-height: calc(100vh - 2rem - 42px);
+            max-height: calc(
+                100svh - var(--dim-header-height) - var(--dim-footer-height) - 2 *
+                    var(--dim-container-main-margin-y)
+            );
             overflow: auto;
             position: sticky;
-            top: 42px;
-            padding-top: 1rem;
+            top: calc(
+                var(--dim-header-height) + var(--dim-container-main-margin-y)
+            );
         }
         .site-menu {
             margin-top: 1rem;
@@ -1596,15 +1627,20 @@
         }
 
         .site-menu {
-            margin-top: 1rem;
+            margin-top: 0rem;
         }
 
         .page-menu,
         .site-menu {
-            max-height: calc(100vh - 2rem - 42px);
+            max-height: calc(
+                100svh - var(--dim-header-height) - var(--dim-footer-height) - 2 *
+                    var(--dim-container-main-margin-y)
+            );
             overflow: auto;
             position: sticky;
-            top: 42px;
+            top: calc(
+                var(--dim-header-height) + var(--dim-container-main-margin-y)
+            );
         }
     }
 }
