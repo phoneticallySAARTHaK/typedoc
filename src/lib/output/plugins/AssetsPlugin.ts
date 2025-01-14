@@ -37,6 +37,10 @@ export class AssetsPlugin extends RendererComponent {
             hierarchy_expand: this.application.i18n.theme_hierarchy_expand(),
             hierarchy_collapse:
                 this.application.i18n.theme_hierarchy_collapse(),
+            theme_search_index_not_available:
+                this.application.i18n.theme_search_index_not_available(),
+            theme_search_no_results:
+                this.application.i18n.theme_search_no_results(),
         };
     }
 
