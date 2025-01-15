@@ -490,7 +490,6 @@
         font-size: 16px;
         color: var(--color-text);
         margin: 0;
-        padding-bottom: (keyboard-inset-height, 0px);
     }
 
     a {
@@ -1079,11 +1078,14 @@
 
     /* Avoid setting `display` on closed dialog */
     #tsd-search[open] {
+        --margin-top: 25svh;
         width: 32rem;
-        max-height: 90svh;
         max-width: 90vw;
         min-height: 10rem;
-        margin-top: 25vh;
+        margin-top: var(--margin-top);
+        max-height: calc(
+            100svh - env(keyboard-inset-height, 0px) - var(--margin-top) - 10svh
+        );
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -1508,7 +1510,10 @@
             display: flex;
         }
         #tsd-search[open] {
-            margin-top: 15vh;
+            --margin-top: max(
+                calc(15vh - env(keyboard-inset-height, 0px)),
+                5vh
+            );
         }
     }
 
