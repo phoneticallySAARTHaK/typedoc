@@ -240,10 +240,6 @@
         color-scheme: var(--color-scheme);
     }
 
-    body {
-        margin: 0;
-    }
-
     :root[data-theme="light"] {
         --color-background: var(--light-color-background);
         --color-background-secondary: var(--light-color-background-secondary);
@@ -493,6 +489,8 @@
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
         font-size: 16px;
         color: var(--color-text);
+        margin: 0;
+        padding-bottom: (keyboard-inset-height, 0px);
     }
 
     a {
