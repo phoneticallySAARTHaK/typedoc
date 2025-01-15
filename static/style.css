@@ -1064,7 +1064,8 @@
     /* Avoid setting `display` on closed dialog */
     #tsd-search[open] {
         width: 32rem;
-        max-height: 50vh;
+        max-height: 90vh;
+        max-width: 90vw;
         min-height: 10rem;
         margin-top: 25vh;
         display: flex;
