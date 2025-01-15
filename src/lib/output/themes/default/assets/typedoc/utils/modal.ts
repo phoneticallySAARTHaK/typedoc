@@ -67,7 +67,11 @@ export function setUpModal(
     });
 
     if (options?.closeOnClick) {
-        modal.addEventListener("click", console.log);
+        document.addEventListener("click", (e) => {
+            if (modal.open && !modal.contains(e.target as HTMLElement)) {
+                closeModal(modal);
+            }
+        });
     }
 }
 
