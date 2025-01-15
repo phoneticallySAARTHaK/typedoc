@@ -1082,9 +1082,12 @@
         max-width: 90vw;
         min-height: 10rem;
         margin-top: 0;
-        --max-height: calc(100svh - env(keyboard-inset-height, 0px) - 10svh);
+        --screen-real-estate: calc(100vh - env(keyboard-inset-height, 0px));
+        --max-height: calc(var(--screen-real-estate) - 10svh);
         max-height: var(--max-height);
-        transform: translateY(calc((100vh - var(--max-height)) / 2));
+        transform: translateY(
+            calc((var(--screen-real-estate) - var(--max-height)) / 2)
+        );
         transition: transform 0.1s linear;
         display: flex;
         flex-direction: column;
