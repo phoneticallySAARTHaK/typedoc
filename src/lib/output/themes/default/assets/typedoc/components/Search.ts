@@ -1,7 +1,7 @@
 import { debounce } from "../utils/debounce.js";
 import { Index } from "lunr";
 import { decompressJson } from "../utils/decompress.js";
-import { hideScrollbar, resetScrollbar } from "../utils/modal.js";
+import { openModal, setUpModal } from "../utils/modal.js";
 
 /**
  * Keep this in sync with the interface in src/lib/output/plugins/JavascriptIndexPlugin.ts
@@ -107,10 +107,9 @@ function bindEvents(
     field: HTMLInputElement,
     state: SearchState,
 ) {
-    trigger.addEventListener("click", () => openModal(searchEl));
+    setUpModal(searchEl, "modal-fade-out", { closeOnEsc: true });
 
-    searchEl.addEventListener("close", resetScrollbar);
-    searchEl.addEventListener("cancel", resetScrollbar);
+    trigger.addEventListener("click", () => openModal(searchEl));
 
     field.addEventListener(
         "input",
@@ -170,13 +169,6 @@ function bindEvents(
         }
     });
     // TODO: Optionally add close on click
-}
-
-/** Opening the dialog requires a separate function since there is no "open" event for dialogs */
-function openModal(searchEl: HTMLDialogElement) {
-    if (searchEl.open) return;
-    hideScrollbar();
-    searchEl.showModal();
 }
 
 function updateResults(
