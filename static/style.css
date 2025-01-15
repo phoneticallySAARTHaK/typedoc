@@ -1122,8 +1122,14 @@
         align-items: center;
         padding: 0.5rem 0.25rem;
     }
+
     #tsd-search-results > li[role="option"] > a > span > .parent {
         color: var(--color-text-aside);
+    }
+    #tsd-search-results > li[role="option"] > a > span mark {
+        color: inherit;
+        background-color: inherit;
+        font-weight: bold;
     }
     #tsd-search-results > li.state {
         flex: 1;
