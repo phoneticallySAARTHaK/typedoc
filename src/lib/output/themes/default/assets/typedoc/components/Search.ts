@@ -183,6 +183,7 @@ function bindEvents(
 
 /** Opening the dialog requires a separate function since there is no "open" event for dialogs */
 function openModal(searchEl: HTMLDialogElement) {
+    if (searchEl.open) return;
     hideScrollbar();
     searchEl.showModal();
 }
