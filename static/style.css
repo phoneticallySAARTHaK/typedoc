@@ -1141,7 +1141,11 @@
         align-items: center;
         padding: 0.5rem 0.25rem;
     }
-
+    #tsd-search-results > li[role="option"] > a > span {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
     #tsd-search-results > li[role="option"] > a > span > .parent {
         color: var(--color-text-aside);
     }
