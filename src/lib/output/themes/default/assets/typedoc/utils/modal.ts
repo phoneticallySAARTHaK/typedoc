@@ -67,11 +67,15 @@ export function setUpModal(
     });
 
     if (options?.closeOnClick) {
-        document.addEventListener("click", (e) => {
-            if (modal.open && !modal.contains(e.target as HTMLElement)) {
-                closeModal(modal);
-            }
-        });
+        document.addEventListener(
+            "click",
+            (e) => {
+                if (modal.open && !modal.contains(e.target as HTMLElement)) {
+                    closeModal(modal);
+                }
+            },
+            true,
+        );
     }
 }
 
