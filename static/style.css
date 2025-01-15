@@ -1,5 +1,8 @@
 @layer typedoc {
     :root {
+        --modal-animation-duration: 0.2s;
+    }
+    :root {
         /* Light */
         --light-color-background: #f2f4f8;
         --light-color-background-secondary: #eff0f1;
@@ -450,29 +453,6 @@
             opacity: 0;
         }
     }
-    @keyframes fade-in-delayed {
-        0% {
-            opacity: 0;
-        }
-        33% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-    @keyframes fade-out-delayed {
-        0% {
-            opacity: 1;
-            visibility: visible;
-        }
-        66% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 0;
-        }
-    }
     @keyframes pop-in-from-right {
         from {
             transform: translate(100%, 0);
@@ -553,6 +533,17 @@
         margin: 1em 0;
         padding-left: 1em;
         border-left: 4px solid gray;
+    }
+
+    dialog {
+        border: none;
+        outline: none;
+        padding: 1rem;
+        background-color: var(--color-background);
+    }
+    ::backdrop {
+        backdrop-filter: blur(2px);
+        background-color: rgba(0, 0, 0, 0.5);
     }
 
     .tsd-typography {
@@ -1061,101 +1052,83 @@
         margin-bottom: 1rem;
     }
 
-    #tsd-search {
-        transition: background-color 0.2s;
+    #tsd-search[open],
+    #tsd-search[open]::backdrop {
+        animation: fade-in var(--modal-animation-duration) ease-out forwards;
     }
-    #tsd-search .title {
-        position: relative;
-        z-index: 2;
+    #tsd-search.closing,
+    #tsd-search.closing::backdrop {
+        animation-name: fade-out;
     }
-    #tsd-search .field {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 2.5rem;
-        height: 100%;
-    }
-    #tsd-search .field input {
-        box-sizing: border-box;
-        position: relative;
-        top: -50px;
-        z-index: 1;
-        width: 100%;
-        padding: 0 10px;
-        opacity: 0;
-        outline: 0;
-        border: 0;
-        background: transparent;
-        color: var(--color-text);
-    }
-    #tsd-search .field label {
-        position: absolute;
+
+    /* Avoid setting `display` on closed dialog */
+    #tsd-search[open] {
+        width: 32rem;
+        max-height: 50vh;
+        min-height: 10rem;
+        margin-top: 25vh;
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
-        right: -40px;
+        border-radius: 6px;
     }
-    #tsd-search .field input,
-    #tsd-search .title,
-    #tsd-toolbar-links a {
-        transition: opacity 0.2s;
-    }
-    #tsd-search .results {
-        position: absolute;
-        visibility: hidden;
-        top: 40px;
+    #tsd-search-input {
+        box-sizing: border-box;
+        outline: 0;
         width: 100%;
+        height: 2.5rem;
+        flex: 0 0 auto;
+        padding: 0 0.625rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        color: var(--color-text);
+        background-color: transparent;
+        border: 2px solid var(--color-accent);
+        transition:
+            border-color 0.2s,
+            background-color 0.2s;
+    }
+    #tsd-search-input:focus-visible {
+        background: var(--color-accent);
+        border-color: transparent;
+    }
+    #tsd-search-results {
         margin: 0;
         padding: 0;
+        margin-top: 0.5rem;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
         list-style: none;
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+        overflow-y: auto;
     }
-    #tsd-search .results li {
+    #tsd-search-results > li[role="option"] {
+        box-sizing: border-box;
+        border-radius: 4px;
+        line-height: 1.5;
+        cursor: pointer;
         background-color: var(--color-background);
-        line-height: initial;
-        padding: 4px;
     }
-    #tsd-search .results li:nth-child(even) {
+    #tsd-search-results > li[role="option"]:nth-child(even) {
         background-color: var(--color-background-secondary);
     }
-    #tsd-search .results li.state {
-        display: none;
-    }
-    #tsd-search .results li.current:not(.no-results),
-    #tsd-search .results li:hover:not(.no-results) {
+    #tsd-search-results > li[role="option"]:is(:hover, [aria-selected="true"]) {
         background-color: var(--color-accent);
     }
-    #tsd-search .results a {
+    #tsd-search-results > li[role="option"] > a {
+        box-sizing: border-box;
+        width: 100%;
         display: flex;
         align-items: center;
-        padding: 0.25rem;
-        box-sizing: border-box;
+        padding: 0.5rem 0.25rem;
     }
-    #tsd-search .results a:before {
-        top: 10px;
-    }
-    #tsd-search .results span.parent {
+    #tsd-search-results > li[role="option"] > a > span > .parent {
         color: var(--color-text-aside);
-        font-weight: normal;
     }
-    #tsd-search.has-focus {
-        background-color: var(--color-accent);
-    }
-    #tsd-search.has-focus .field input {
-        top: 0;
-        opacity: 1;
-    }
-    #tsd-search.has-focus .title,
-    #tsd-search.has-focus #tsd-toolbar-links a {
-        z-index: 0;
-        opacity: 0;
-    }
-    #tsd-search.has-focus .results {
-        visibility: visible;
-    }
-    #tsd-search.loading .results li.state.loading {
-        display: block;
-    }
-    #tsd-search.failure .results li.state.failure {
-        display: block;
+    #tsd-search-results > li.state {
+        flex: 1;
+        display: grid;
+        place-content: center;
     }
 
     .tsd-signature {
