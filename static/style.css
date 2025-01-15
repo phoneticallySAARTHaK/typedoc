@@ -1081,17 +1081,14 @@
         width: 32rem;
         max-width: 90vw;
         min-height: 10rem;
-        top: 0;
         margin-top: 0;
-        --margin-top: 25vh;
-        transform: translateY(var(--margin-top));
-        max-height: calc(
-            100vh - env(keyboard-inset-height, 0px) - var(--margin-top) - 10vh
-        );
+        --max-height: calc(100svh - env(keyboard-inset-height, 0px) - 10svh);
+        max-height: var(--max-height);
+        transform: translateY(calc((100vh - var(--max-height)) / 2));
+        transition: transform 0.1s linear;
         display: flex;
         flex-direction: column;
         border-radius: 6px;
-        transition: transform 0.1s linear;
     }
     #tsd-search-input {
         box-sizing: border-box;
@@ -1510,12 +1507,6 @@
         }
         .tsd-navigation .tsd-nav-link {
             display: flex;
-        }
-        #tsd-search[open] {
-            --margin-top: max(
-                calc(15vh - env(keyboard-inset-height, 0px)),
-                5vh
-            );
         }
     }
 
