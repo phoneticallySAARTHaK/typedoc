@@ -1078,18 +1078,20 @@
 
     /* Avoid setting `display` on closed dialog */
     #tsd-search[open] {
-        --margin-top: 25svh;
         width: 32rem;
         max-width: 90vw;
         min-height: 10rem;
-        margin-top: var(--margin-top);
+        top: 0;
+        margin-top: 0;
+        --margin-top: 25vh;
+        transform: translateY(var(--margin-top));
         max-height: calc(
-            100svh - env(keyboard-inset-height, 0px) - var(--margin-top) - 10svh
+            100vh - env(keyboard-inset-height, 0px) - var(--margin-top) - 10vh
         );
         display: flex;
         flex-direction: column;
-        overflow: hidden;
         border-radius: 6px;
+        transition: transform 0.1s linear;
     }
     #tsd-search-input {
         box-sizing: border-box;
