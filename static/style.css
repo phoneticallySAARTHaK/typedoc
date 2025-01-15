@@ -1080,7 +1080,7 @@
     /* Avoid setting `display` on closed dialog */
     #tsd-search[open] {
         width: 32rem;
-        max-height: 90vh;
+        max-height: 90svh;
         max-width: 90vw;
         min-height: 10rem;
         margin-top: 25vh;
@@ -1506,6 +1506,9 @@
         }
         .tsd-navigation .tsd-nav-link {
             display: flex;
+        }
+        #tsd-search[open] {
+            margin-top: 15vh;
         }
     }
 
