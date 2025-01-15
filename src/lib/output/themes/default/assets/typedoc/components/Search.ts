@@ -289,6 +289,7 @@ function setNextResult(
     }
 
     next.ariaSelected = "true";
+    next.scrollIntoView({ behavior: "smooth", block: "nearest" });
     field.setAttribute("aria-activedescendant", next.id);
     current?.setAttribute("aria-selected", "false");
 }
