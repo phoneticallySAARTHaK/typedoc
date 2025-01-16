@@ -57,7 +57,7 @@ export function setUpModal(
         if (e.animationName !== closingAnimation) return;
         modal.classList.remove(CLOSING_CLASS);
         modal.close();
-        document.getElementById(modal.dataset.overlayId || "")?.remove();
+        removeOverlay(modal);
         resetScrollbar();
     });
 
@@ -72,6 +72,10 @@ export function setUpModal(
         e.preventDefault();
     });
 
+    modal.addEventListener("cancel", () => {
+        removeOverlay(modal);
+    });
+
     if (options?.closeOnClick) {
         document.addEventListener(
             "click",
@@ -83,6 +87,11 @@ export function setUpModal(
             true,
         );
     }
+}
+
+function removeOverlay(modal: Modal) {
+    const id = modal.dataset.overlayId;
+    document.getElementById(id || "")?.remove();
 }
 
 export function openModal(modal: Modal) {
