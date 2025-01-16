@@ -1,5 +1,8 @@
 @layer typedoc {
     :root {
+        --modal-animation-duration: 0.2s;
+    }
+    :root {
         /* Light */
         --light-color-background: #f2f4f8;
         --light-color-background-secondary: #eff0f1;
@@ -237,10 +240,6 @@
         color-scheme: var(--color-scheme);
     }
 
-    body {
-        margin: 0;
-    }
-
     :root[data-theme="light"] {
         --color-background: var(--light-color-background);
         --color-background-secondary: var(--light-color-background-secondary);
@@ -450,29 +449,6 @@
             opacity: 0;
         }
     }
-    @keyframes fade-in-delayed {
-        0% {
-            opacity: 0;
-        }
-        33% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-    @keyframes fade-out-delayed {
-        0% {
-            opacity: 1;
-            visibility: visible;
-        }
-        66% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 0;
-        }
-    }
     @keyframes pop-in-from-right {
         from {
             transform: translate(100%, 0);
@@ -496,6 +472,7 @@
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
         font-size: 16px;
         color: var(--color-text);
+        margin: 0;
     }
 
     a {
@@ -553,6 +530,40 @@
         margin: 1em 0;
         padding-left: 1em;
         border-left: 4px solid gray;
+    }
+
+    dialog {
+        border: none;
+        outline: none;
+        padding: 1rem;
+        background-color: var(--color-background);
+    }
+    ::backdrop {
+        /* Doesn't work in FF as of now */
+        display: none;
+    }
+    .overlay {
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        animation: fade-in var(--modal-animation-duration) forwards;
+    }
+    .overlay.closing {
+        animation-name: fade-out;
+    }
+
+    .aria-live-message {
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+        clip-path: rect(0px 0px 0px 0px);
+        position: absolute;
+        left: -100vmax;
+        overflow: hidden;
     }
 
     .tsd-typography {
@@ -1061,117 +1072,92 @@
         margin-bottom: 1rem;
     }
 
-    #tsd-search {
-        transition: background-color 0.2s;
+    #tsd-search[open] {
+        animation: fade-in var(--modal-animation-duration) ease-out forwards;
     }
-    #tsd-search .title {
-        position: relative;
-        z-index: 2;
-    }
-    #tsd-search .field {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 2.5rem;
-        height: 100%;
-    }
-    #tsd-search .field input {
-        box-sizing: border-box;
-        position: relative;
-        top: -50px;
-        z-index: 1;
-        width: 100%;
-        padding: 0 10px;
-        opacity: 0;
-        outline: 0;
-        border: 0;
-        background: transparent;
-        color: var(--color-text);
-    }
-    #tsd-search .field label {
-        position: absolute;
-        overflow: hidden;
-        right: -40px;
-    }
-    #tsd-search .field input,
-    #tsd-search .title,
-    #tsd-toolbar-links a {
-        transition: opacity 0.2s;
-    }
-    #tsd-search .results {
-        position: absolute;
-        visibility: hidden;
-        top: 40px;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-    }
-    #tsd-search .results li {
-        background-color: var(--color-background);
-        line-height: initial;
-        padding: 4px;
-    }
-    #tsd-search .results li:nth-child(even) {
-        background-color: var(--color-background-secondary);
-    }
-    #tsd-search .results li.state {
-        display: none;
-    }
-    #tsd-search .results li.current:not(.no-results),
-    #tsd-search .results li:hover:not(.no-results) {
-        background-color: var(--color-accent);
-    }
-    #tsd-search .results a {
-        display: flex;
-        align-items: center;
-        padding: 0.25rem;
-        box-sizing: border-box;
-    }
-    #tsd-search .results a:before {
-        top: 10px;
-    }
-    #tsd-search .results span.parent {
-        color: var(--color-text-aside);
-        font-weight: normal;
-    }
-    #tsd-search.has-focus {
-        background-color: var(--color-accent);
-    }
-    #tsd-search.has-focus .field input {
-        top: 0;
-        opacity: 1;
-    }
-    #tsd-search.has-focus .title,
-    #tsd-search.has-focus #tsd-toolbar-links a {
-        z-index: 0;
-        opacity: 0;
-    }
-    #tsd-search.has-focus .results {
-        visibility: visible;
-    }
-    #tsd-search.loading .results li.state.loading {
-        display: block;
-    }
-    #tsd-search.failure .results li.state.failure {
-        display: block;
+    #tsd-search.closing {
+        animation-name: fade-out;
     }
 
-    #tsd-toolbar-links {
-        position: absolute;
-        top: 0;
-        right: 2rem;
-        height: 100%;
+    /* Avoid setting `display` on closed dialog */
+    #tsd-search[open] {
+        width: 32rem;
+        max-width: 90vw;
+        min-height: 10rem;
+        margin-top: 10vh;
+        max-height: calc(100vh - env(keyboard-inset-height, 0px) - 25vh);
+        display: flex;
+        flex-direction: column;
+        border-radius: 6px;
+        will-change: max-height;
+    }
+    #tsd-search-input {
+        box-sizing: border-box;
+        outline: 0;
+        width: 100%;
+        height: 2.5rem;
+        flex: 0 0 auto;
+        padding: 0 0.625rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        color: var(--color-text);
+        background-color: transparent;
+        border: 2px solid var(--color-accent);
+        transition:
+            border-color 0.2s,
+            background-color 0.2s;
+    }
+    #tsd-search-input:focus-visible {
+        background: var(--color-accent);
+        border-color: transparent;
+    }
+    #tsd-search-results {
+        margin: 0;
+        padding: 0;
+        margin-top: 0.5rem;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        overflow-y: auto;
+    }
+    #tsd-search-results > li[role="option"] {
+        box-sizing: border-box;
+        border-radius: 4px;
+        line-height: 1.5;
+        cursor: pointer;
+        background-color: var(--color-background);
+    }
+    #tsd-search-results > li[role="option"]:nth-child(even) {
+        background-color: var(--color-background-secondary);
+    }
+    #tsd-search-results > li[role="option"]:is(:hover, [aria-selected="true"]) {
+        background-color: var(--color-accent);
+    }
+    #tsd-search-results > li[role="option"] > a {
+        box-sizing: border-box;
+        width: 100%;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        padding: 0.5rem 0.25rem;
     }
-    #tsd-toolbar-links a {
-        margin-left: 1.5rem;
+    #tsd-search-results > li[role="option"] > a > span {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-wrap: anywhere;
     }
-    #tsd-toolbar-links a:hover {
-        text-decoration: underline;
+    #tsd-search-results > li[role="option"] > a > span > .parent {
+        color: var(--color-text-aside);
+    }
+    #tsd-search-results > li[role="option"] > a > span mark {
+        color: inherit;
+        background-color: inherit;
+        font-weight: bold;
+    }
+    #tsd-search-results > li.state {
+        flex: 1;
+        display: grid;
+        place-content: center;
     }
 
     .tsd-signature {
@@ -1261,68 +1247,51 @@
     }
     .tsd-page-toolbar a {
         color: var(--color-text);
-        text-decoration: none;
     }
-    .tsd-page-toolbar a.title {
-        font-weight: bold;
-    }
-    .tsd-page-toolbar a.title:hover {
-        text-decoration: underline;
-    }
-    .tsd-page-toolbar .tsd-toolbar-contents {
+    .tsd-toolbar-contents {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         height: 2.5rem;
         margin: 0 auto;
     }
-    .tsd-page-toolbar .table-cell {
-        position: relative;
-        white-space: nowrap;
-        line-height: 40px;
+    #tsd-toolbar-title {
+        font-weight: bold;
+        margin-right: auto;
     }
-    .tsd-page-toolbar .table-cell:first-child {
-        width: 100%;
-    }
-    .tsd-page-toolbar .tsd-toolbar-icon {
-        box-sizing: border-box;
-        line-height: 0;
-        padding: 12px 0;
+    #tsd-toolbar-links {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-right: 1rem;
     }
 
     .tsd-widget {
         display: inline-block;
         overflow: hidden;
         opacity: 0.8;
-        height: 40px;
         transition:
             opacity 0.1s,
             background-color 0.2s;
-        vertical-align: bottom;
         cursor: pointer;
+        box-sizing: border-box;
+        height: 2.5rem;
+        width: 2.5rem;
+        text-align: center;
+        line-height: 1;
+        appearance: none;
+        border: none;
+        background-color: transparent;
     }
     .tsd-widget:hover {
         opacity: 0.9;
     }
-    .tsd-widget.active {
+    .tsd-widget:active {
         opacity: 1;
         background-color: var(--color-accent);
     }
-    .tsd-widget.no-caption {
-        width: 40px;
-    }
-    .tsd-widget.no-caption:before {
-        margin: 0;
-    }
-
-    .tsd-widget.options,
-    .tsd-widget.menu {
+    #tsd-toolbar-menu-trigger {
         display: none;
-    }
-    input[type="checkbox"] + .tsd-widget:before {
-        background-position: -120px 0;
-    }
-    input[type="checkbox"]:checked + .tsd-widget:before {
-        background-position: -160px 0;
     }
 
     img {
@@ -1457,9 +1426,11 @@
 
     /* mobile */
     @media (max-width: 769px) {
-        .tsd-widget.options,
-        .tsd-widget.menu {
+        #tsd-toolbar-menu-trigger {
             display: inline-block;
+        }
+        #tsd-toolbar-links {
+            display: none;
         }
 
         .container-main {
@@ -1487,18 +1458,6 @@
         }
         html .col-sidebar > *:last-child {
             padding-bottom: 20px;
-        }
-        html .overlay {
-            content: "";
-            display: block;
-            position: fixed;
-            z-index: 1023;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.75);
-            visibility: hidden;
         }
 
         .to-has-menu .overlay {
@@ -1534,9 +1493,6 @@
         }
         .has-menu .tsd-navigation {
             max-height: 100%;
-        }
-        #tsd-toolbar-links {
-            display: none;
         }
         .tsd-navigation .tsd-nav-link {
             display: flex;
