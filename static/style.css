@@ -1085,7 +1085,7 @@
         max-width: 90vw;
         min-height: 10rem;
         margin-top: 10vh;
-        max-height: calc(100vh - env(keyboard-inset-height, 0px) - 20vh);
+        max-height: calc(100vh - env(keyboard-inset-height, 0px) - 25vh);
         display: flex;
         flex-direction: column;
         border-radius: 6px;
