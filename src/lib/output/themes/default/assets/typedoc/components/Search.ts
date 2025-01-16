@@ -107,7 +107,7 @@ function bindEvents(
     field: HTMLInputElement,
     state: SearchState,
 ) {
-    setUpModal(searchEl, "modal-fade-out", {
+    setUpModal(searchEl, "fade-out", {
         closeOnEsc: true,
         closeOnClick: true,
     });

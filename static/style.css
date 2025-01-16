@@ -466,23 +466,6 @@
             transform: translate(100%, 0);
         }
     }
-    @keyframes modal-fade-in {
-        from {
-            opacity: 0;
-            box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
-        }
-        to {
-            opacity: 1;
-            box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
-        }
-    }
-    @keyframes modal-fade-out {
-        to {
-            opacity: 1;
-            box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
-        }
-    }
-
     body {
         background: var(--color-background);
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
@@ -558,6 +541,20 @@
     ::backdrop {
         /* Doesn't work in FF as of now */
         display: none;
+    }
+    .overlay {
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+        animation: fade-in var(--modal-animation-duration) forwards;
+    }
+    .overlay.closing {
+        animation-name: fade-out;
     }
 
     .tsd-typography {
@@ -1066,14 +1063,11 @@
         margin-bottom: 1rem;
     }
 
-    #tsd-search[open],
-    #tsd-search[open]::backdrop {
-        animation: modal-fade-in var(--modal-animation-duration) ease-out
-            forwards;
+    #tsd-search[open] {
+        animation: fade-in var(--modal-animation-duration) ease-out forwards;
     }
-    #tsd-search.closing,
-    #tsd-search.closing::backdrop {
-        animation-name: modal-fade-out;
+    #tsd-search.closing {
+        animation-name: fade-out;
     }
 
     /* Avoid setting `display` on closed dialog */
@@ -1455,18 +1449,6 @@
         }
         html .col-sidebar > *:last-child {
             padding-bottom: 20px;
-        }
-        html .overlay {
-            content: "";
-            display: block;
-            position: fixed;
-            z-index: 1023;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.75);
-            visibility: hidden;
         }
 
         .to-has-menu .overlay {

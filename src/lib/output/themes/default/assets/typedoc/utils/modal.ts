@@ -35,6 +35,8 @@ const CLOSING_CLASS = "closing";
 // Could be popover too
 type Modal = HTMLDialogElement;
 
+let overlayIdCounter = 0;
+
 /**
  * Adds event listeners to the modal element, for the closing animation.
  * To alleviate issues caused by default browser behavior.
@@ -47,11 +49,15 @@ export function setUpModal(
         closeOnClick?: boolean;
     },
 ) {
+    overlayIdCounter++;
+    modal.dataset.overlayId = `tsd-ovl-${overlayIdCounter}`;
+
     // Event listener for closing animation
     modal.addEventListener("animationend", (e) => {
         if (e.animationName !== closingAnimation) return;
         modal.classList.remove(CLOSING_CLASS);
         modal.close();
+        document.getElementById(modal.dataset.overlayId || "")?.remove();
         resetScrollbar();
     });
 
@@ -83,7 +89,13 @@ export function openModal(modal: Modal) {
     if (modal.open) {
         return;
     }
-
+    const overlayId = modal.dataset.overlayId;
+    if (overlayId) {
+        const overlay = document.createElement("div");
+        overlay.id = overlayId;
+        overlay.classList.add("overlay");
+        document.body.appendChild(overlay);
+    }
     modal.showModal();
     hideScrollbar();
 }
@@ -91,4 +103,8 @@ export function openModal(modal: Modal) {
 export function closeModal(modal: Modal) {
     if (!modal.open) return;
     modal.classList.add(CLOSING_CLASS);
+    const overlay = document.getElementById(modal.dataset.overlayId || "");
+    if (overlay) {
+        overlay.classList.add(CLOSING_CLASS);
+    }
 }

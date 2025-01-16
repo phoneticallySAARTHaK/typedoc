@@ -124,8 +124,6 @@ export const defaultLayout = (
 
             {context.footer()}
 
-            <div class="overlay"></div>
-
             {context.hook("body.end", context)}
         </body>
     </html>
