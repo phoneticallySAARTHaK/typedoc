@@ -35,6 +35,10 @@ export const toolbar = (context: DefaultThemeRenderContext, props: PageEvent<Ref
                 <ul role="listbox" id="tsd-search-results">
                     <li class="state">{context.i18n.theme_preparing_search_index()}</li>
                 </ul>
+
+                <div class="aria-live-message" aria-live="polite">
+                    Press "Escape" or click outside the modal to close.
+                </div>
             </dialog>
 
             <button

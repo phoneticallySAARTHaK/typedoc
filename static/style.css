@@ -557,6 +557,16 @@
         animation-name: fade-out;
     }
 
+    .aria-live-message {
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+        clip-path: rect(0px 0px 0px 0px);
+        position: absolute;
+        left: -100vmax;
+        overflow: hidden;
+    }
+
     .tsd-typography {
         line-height: 1.333em;
     }
