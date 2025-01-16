@@ -1081,17 +1081,12 @@
         width: 32rem;
         max-width: 90vw;
         min-height: 10rem;
-        margin-top: 0;
-        --screen-real-estate: calc(100vh - env(keyboard-inset-height, 0px));
-        --max-height: calc(var(--screen-real-estate) - 10svh);
-        max-height: var(--max-height);
-        transform: translateY(
-            calc((var(--screen-real-estate) - var(--max-height)) / 2)
-        );
-        transition: transform 0.1s linear;
+        margin-top: 10vh;
+        max-height: calc(100vh - env(keyboard-inset-height, 0px) - 20vh);
         display: flex;
         flex-direction: column;
         border-radius: 6px;
+        will-change: max-height;
     }
     #tsd-search-input {
         box-sizing: border-box;
