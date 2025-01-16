@@ -61,19 +61,10 @@ export function setUpModal(
         resetScrollbar();
     });
 
-    // Override default closing behavior.
-    modal.addEventListener("keydown", (e) => {
-        if (e.key !== "Escape") {
-            return;
-        }
-        if (options?.closeOnEsc) {
-            closeModal(modal);
-        }
+    // Override modal cancel behavior
+    modal.addEventListener("cancel", (e) => {
         e.preventDefault();
-    });
-
-    modal.addEventListener("cancel", () => {
-        removeOverlay(modal);
+        closeModal(modal);
     });
 
     if (options?.closeOnClick) {
