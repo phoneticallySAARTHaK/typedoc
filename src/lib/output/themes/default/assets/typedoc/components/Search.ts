@@ -193,7 +193,15 @@ function bindEvents(
         ) as HTMLLinkElement | null;
         if (!target) return;
 
-        recentSearches.unshift({ ref: target.dataset.ref || "", score: 0 });
+        const ref = target.dataset.ref || "";
+        const previousIndex = recentSearches.findIndex((el) => el.ref === ref);
+        if (previousIndex === -1) {
+            recentSearches.unshift({ ref, score: 0 });
+        } else if (previousIndex !== 0) {
+            const prev = recentSearches.splice(previousIndex, 1)[0];
+            recentSearches.unshift(prev);
+        }
+
         if (recentSearches.length > 3) {
             recentSearches.pop();
         }
@@ -312,6 +320,9 @@ function setNextResult(
         next = current?.previousElementSibling || results.lastElementChild;
     }
 
+    // When only one child is present.
+    if (next === current) return;
+
     // bad markup
     if (!next || next.role !== "option") {
         console.error("Option missing");
@@ -422,13 +433,22 @@ function isKeyboardActive() {
     );
 }
 
+/**
+ * Gets recent searches from localStorage, parses, and returns
+ *
+ * This implementation in "unforgiving",
+ * i.e. the parsed value must match the criteria: string array of length <= 3
+ *
+ * Returns empty array in case of failure
+ * @returns
+ */
 function parseRecentSearches() {
     try {
         const recent = storage.getItem("tsd-search-recent")!;
         const parsed = JSON.parse(recent);
         if (Array.isArray(parsed) && parsed.length <= 3) {
             return parsed.map((ref) => {
-                if (typeof ref !== "string") throw new Error("Invalid ref");
+                if (isNaN(Number(ref))) throw new Error("Invalid ref");
 
                 return {
                     ref,
@@ -442,8 +462,11 @@ function parseRecentSearches() {
     }
 }
 
+/**
+ * Save recentSearches to localStorage.
+ * Performs no checks on the argument.
+ */
 function setRecentSearches(recent: PartialSearch[]) {
-    if (recent.length === 0 || recent.length > 3) return;
     storage.setItem(
         "tsd-search-recent",
         JSON.stringify(recent.map(({ ref }) => ref)),
