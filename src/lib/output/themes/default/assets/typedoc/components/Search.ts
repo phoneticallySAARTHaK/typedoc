@@ -210,7 +210,9 @@ function updateResults(
     }
 
     if (res.length === 0 && searchText) {
-        const message = window.translations.theme_search_no_results_found_for;
+        const message =
+            window.translations.theme_search_no_results_found_for +
+            ` "<strong>${searchText}</strong>"`;
         updateStatusEl(status, message);
         return;
     }
