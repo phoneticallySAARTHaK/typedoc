@@ -1165,7 +1165,7 @@
         background-color: var(--color-background-active);
         border-color: transparent;
     }
-    #tsd-search-input:focus-visible::placeholder {
+    #tsd-search-input::placeholder {
         color: inherit;
         opacity: 0.8;
     }
