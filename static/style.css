@@ -19,9 +19,9 @@
         /* Light */
         --light-color-background: #f2f4f8;
         --light-color-background-secondary: #eff0f1;
-        --light-color-background-warning: #e6e600;
         /* Not to be confused with [:active](https://developer.mozilla.org/en-US/docs/Web/CSS/:active) */
         --light-color-background-active: #d6d8da;
+        --light-color-background-warning: #e6e600;
         --light-color-warning-text: #222;
         --light-color-accent: #c5c7c9;
         --light-color-active-menu-item: var(--light-color-background-active);
@@ -81,6 +81,8 @@
         /* Dark */
         --dark-color-background: #2b2e33;
         --dark-color-background-secondary: #1e2024;
+        /* Not to be confused with [:active](https://developer.mozilla.org/en-US/docs/Web/CSS/:active) */
+        --dark-color-background-active: #5d5d6a;
         --dark-color-background-warning: #bebe00;
         /* Not to be confused with [:active](https://developer.mozilla.org/en-US/docs/Web/CSS/:active) */
         --dark-color-background-active: #5d5d6a;
@@ -143,6 +145,7 @@
             --color-background-secondary: var(
                 --light-color-background-secondary
             );
+            --color-background-active: var(--light-color-background-active);
             --color-background-warning: var(--light-color-background-warning);
             --color-background-active: var(--light-color-background-active);
             --color-warning-text: var(--light-color-warning-text);
@@ -205,6 +208,7 @@
             --color-background-secondary: var(
                 --dark-color-background-secondary
             );
+            --color-background-active: var(--dark-color-background-active);
             --color-background-warning: var(--dark-color-background-warning);
             --color-background-active: var(--dark-color-background-active);
             --color-warning-text: var(--dark-color-warning-text);
@@ -268,6 +272,7 @@
     :root[data-theme="light"] {
         --color-background: var(--light-color-background);
         --color-background-secondary: var(--light-color-background-secondary);
+        --color-background-active: var(--light-color-background-active);
         --color-background-warning: var(--light-color-background-warning);
         --color-background-active: var(--light-color-background-active);
         --color-warning-text: var(--light-color-warning-text);
@@ -325,6 +330,7 @@
     :root[data-theme="dark"] {
         --color-background: var(--dark-color-background);
         --color-background-secondary: var(--dark-color-background-secondary);
+        --color-background-active: var(--dark-color-background-active);
         --color-background-warning: var(--dark-color-background-warning);
         --color-background-active: var(--dark-color-background-active);
         --color-warning-text: var(--dark-color-warning-text);
@@ -562,12 +568,6 @@
         margin: 1em 0;
         padding-left: 1em;
         border-left: 4px solid gray;
-    }
-
-    button {
-        border: none;
-        appearance: none;
-        background-color: transparent;
     }
 
     img {
@@ -1164,6 +1164,7 @@
     #tsd-search-input:focus-visible {
         background-color: var(--color-background-active);
         border-color: transparent;
+        color: var(--color-contrast-text);
     }
     #tsd-search-input::placeholder {
         color: inherit;
@@ -1340,9 +1341,11 @@
         width: 2.5rem;
         transition:
             opacity 0.1s,
-            background-color 0.2s;
+            background-color 0.1s;
         text-align: center;
         cursor: pointer;
+        border: none;
+        background-color: transparent;
     }
     .tsd-widget:hover {
         opacity: 0.9;
