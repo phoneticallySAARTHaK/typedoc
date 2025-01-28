@@ -13,7 +13,7 @@ registerComponent(Filter, ".tsd-filter-item input[type=checkbox]");
 
 const themeChoice = document.getElementById("tsd-theme");
 if (themeChoice) {
-    initTheme(themeChoice as HTMLOptionElement);
+    initTheme(themeChoice as HTMLSelectElement);
 }
 
 declare global {

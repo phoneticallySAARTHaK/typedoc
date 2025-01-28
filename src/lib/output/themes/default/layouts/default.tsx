@@ -85,12 +85,14 @@ export const defaultLayout = (
             {!!getHierarchyRoots(props.project).length && (
                 <script async src={context.relativeURL("assets/hierarchy.js", true)} id="tsd-hierarchy-script"></script>
             )}
+            <script>
+                <Raw html='const saved=localStorage.getItem("tsd-theme")||"os";document.documentElement.dataset.theme=saved=="os"?(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):saved' />
+            </script>
             {context.hook("head.end", context)}
         </head>
         <body>
             {context.hook("body.begin", context)}
             <script>
-                <Raw html='document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";' />
                 {/* Hide the entire page for up to 0.5 seconds so that if navigating between pages on a fast */}
                 {/* device the navigation pane doesn't appear to flash if it loads just after the page displays. */}
                 {/* This could still happen if we're unlucky, but from experimenting with Firefox's throttling */}
