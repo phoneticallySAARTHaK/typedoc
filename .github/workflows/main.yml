@@ -43,7 +43,7 @@ jobs:
             - name: Build
               run: npm run build
             - name: Build Site
-              run: npm run doc:c -- src/test/converter/ --entryPointStrategy expand
+              run: npx typedoc
             - name: Upload static files as artifact
               id: deployment
               uses: actions/upload-pages-artifact@v3
