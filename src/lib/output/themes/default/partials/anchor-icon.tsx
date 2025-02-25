@@ -6,13 +6,14 @@ export function anchorIcon(context: DefaultThemeRenderContext, anchor: string | 
     if (!anchor) return <></>;
 
     return (
-        <a href={`#${anchor}`} aria-label={i18n.theme_permalink()} class="tsd-anchor-icon">
+        <a href={`#${anchor}`} id={anchor} aria-label={i18n.theme_permalink()} class="tsd-anchor-icon">
             {context.icons.anchor()}
         </a>
     );
 }
 
 export function anchorLink(anchor: string | undefined) {
+    return null;
     if (!anchor) return <></>;
 
     return <a id={anchor} class="tsd-anchor" />;
