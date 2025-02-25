@@ -1,7 +1,5 @@
 import * as shiki from "@gerrit0/mini-shiki";
-import type { ShikiInternal } from "@shikijs/types";
-import * as JSX from "./jsx.js";
-import { unique } from "./array.js";
+import { JSX, unique } from "#utils";
 import assert from "assert";
 
 const aliases = new Map<string, string>();
@@ -25,7 +23,7 @@ class DoubleHighlighter {
     private schemes = new Map<string, string>();
 
     constructor(
-        private highlighter: ShikiInternal,
+        private highlighter: shiki.ShikiInternal,
         private light: shiki.BundledTheme,
         private dark: shiki.BundledTheme,
     ) {}

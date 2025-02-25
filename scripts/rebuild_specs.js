@@ -9,6 +9,7 @@ import * as td from "../dist/index.js";
 import { getExpandedEntryPointsForPaths } from "../dist/lib/utils/index.js";
 import { ok } from "assert";
 import { fileURLToPath } from "url";
+import { diagnostics } from "../dist/lib/utils/loggers.js";
 
 const base = path.join(
     fileURLToPath(import.meta.url),
@@ -41,9 +42,11 @@ async function getApp() {
          */
         toObject(ref, obj) {
             if (obj.url) {
-                obj.url = `typedoc://${obj.url.substring(
-                    obj.url.indexOf(ref.fileName),
-                )}`;
+                obj.url = `typedoc://${
+                    obj.url.substring(
+                        obj.url.indexOf(ref.fileName),
+                    )
+                }`;
             }
             return obj;
         },
@@ -99,7 +102,7 @@ function rebuildConverterTests(app, dirs) {
 
     const errors = ts.getPreEmitDiagnostics(program);
     if (errors.length) {
-        app.logger.diagnostics(errors);
+        diagnostics(app.logger, errors);
         return;
     }
 
@@ -122,10 +125,10 @@ function rebuildConverterTests(app, dirs) {
                 result.name = basename(fullPath);
                 const serialized = app.serializer.projectToObject(
                     result,
-                    process.cwd(),
+                    td.normalizePath(process.cwd()),
                 );
 
-                const data = JSON.stringify(serialized, null, "  ") + "\n";
+                const data = JSON.stringify(serialized, null, 4) + "\n";
                 after(app);
                 fs.writeFileSync(out, data);
             }

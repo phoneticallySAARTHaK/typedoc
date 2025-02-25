@@ -7,9 +7,9 @@ import {
     ReflectionKind,
     type SignatureReflection,
 } from "../index.js";
-import { filterMap } from "../lib/utils/index.js";
+import { filterMap } from "#utils";
 import { equal } from "assert/strict";
-import type { SomeReflection } from "../lib/models/reflections/variant.js";
+import type { SomeReflection } from "../lib/models/variant.js";
 
 export function query(
     project: ProjectReflection,

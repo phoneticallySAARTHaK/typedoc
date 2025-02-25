@@ -5,14 +5,14 @@ import {
     ReflectionKind,
     ReflectionType,
 } from "../models/index.js";
-import type { Logger } from "../utils/index.js";
-import { removeFlag } from "../utils/enum.js";
-import { nicePath } from "../utils/paths.js";
+import { i18n, type Logger, removeFlag } from "#utils";
 
 export function validateDocumentation(
     project: ProjectReflection,
     logger: Logger,
     requiredToBeDocumented: readonly ReflectionKind.KindString[],
+    intentionallyNotDocumented: readonly string[],
+    packagesRequiringDocumentation: readonly string[],
 ): void {
     let kinds = requiredToBeDocumented.reduce(
         (prev, cur) => prev | ReflectionKind[cur],
@@ -37,6 +37,7 @@ export function validateDocumentation(
 
     const toProcess = project.getReflectionsByKind(kinds);
     const seen = new Set<Reflection>();
+    const intentionalUsage = new Set<number>();
 
     outer: while (toProcess.length) {
         const ref = toProcess.shift()!;
@@ -81,10 +82,9 @@ export function validateDocumentation(
         }
 
         if (ref instanceof DeclarationReflection) {
-            const signatures =
-                ref.type instanceof ReflectionType
-                    ? ref.type.declaration.getNonIndexSignatures()
-                    : ref.getNonIndexSignatures();
+            const signatures = ref.type instanceof ReflectionType
+                ? ref.type.declaration.getNonIndexSignatures()
+                : ref.getNonIndexSignatures();
 
             if (signatures.length) {
                 // We've been asked to validate this reflection, so we should validate that
@@ -101,23 +101,41 @@ export function validateDocumentation(
         const symbolId = project.getSymbolIdFromReflection(ref);
 
         // #2644, signatures may be documented by their parent reflection.
-        const hasComment =
-            ref.hasComment() ||
+        const hasComment = ref.hasComment() ||
             (ref.kindOf(ReflectionKind.SomeSignature) &&
                 ref.parent?.hasComment());
 
         if (!hasComment && symbolId) {
-            if (symbolId.fileName.includes("node_modules")) {
+            if (!packagesRequiringDocumentation.includes(symbolId.packageName)) {
+                continue;
+            }
+
+            const intentionalIndex = intentionallyNotDocumented.indexOf(
+                ref.getFriendlyFullName(),
+            );
+            if (intentionalIndex !== -1) {
+                intentionalUsage.add(intentionalIndex);
                 continue;
             }
 
             logger.warn(
-                logger.i18n.reflection_0_kind_1_defined_in_2_does_not_have_any_documentation(
+                i18n.reflection_0_kind_1_defined_in_2_does_not_have_any_documentation(
                     ref.getFriendlyFullName(),
                     ReflectionKind[ref.kind],
-                    nicePath(symbolId.fileName),
+                    `${symbolId.packageName}/${symbolId.packagePath}`,
                 ),
             );
         }
+    }
+
+    const unusedIntentional = intentionallyNotDocumented.filter(
+        (_, i) => !intentionalUsage.has(i),
+    );
+    if (unusedIntentional.length) {
+        logger.warn(
+            i18n.invalid_intentionally_not_documented_names_0(
+                unusedIntentional.join("\n\t"),
+            ),
+        );
     }
 }
