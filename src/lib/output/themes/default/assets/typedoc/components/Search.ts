@@ -136,12 +136,22 @@ function bindEvents(
 
         // Remove visual focus on cursor position change
         if (current) {
+            let verticalArrowSelection = false;
+            let cursorPosChange = false;
             switch (e.key) {
                 case "Home":
                 case "End":
                 case "ArrowLeft":
                 case "ArrowRight":
-                    removeVisualFocus(field);
+                    cursorPosChange = true;
+                    break;
+                case "ArrowDown":
+                case "ArrowUp":
+                    verticalArrowSelection = e.shiftKey;
+                    break;
+            }
+            if (verticalArrowSelection || cursorPosChange) {
+                removeVisualFocus(field);
             }
         }
 
@@ -153,15 +163,22 @@ function bindEvents(
                 break;
             case "ArrowUp":
                 setNextResult(results, field, current, -1);
+                e.preventDefault();
                 break;
             case "ArrowDown":
                 setNextResult(results, field, current, 1);
+                e.preventDefault();
                 break;
         }
     });
 
-    field.addEventListener("change", () => removeVisualFocus(field));
-    field.addEventListener("blur", () => removeVisualFocus(field));
+    function visualBlurHandler() {
+        removeVisualFocus(field);
+    }
+
+    field.addEventListener("change", visualBlurHandler);
+    field.addEventListener("blur", visualBlurHandler);
+    field.addEventListener("click", visualBlurHandler);
 
     /**
      * Start searching by pressing slash, or Ctrl+K
