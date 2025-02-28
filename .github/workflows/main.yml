@@ -45,7 +45,7 @@ jobs:
             - name: Build
               run: pnpm run build
             - name: Build Site
-              run: ./bin/typedoc
+              run: cd example && ../bin/typedoc
             - name: Upload static files as artifact
               id: deployment
               uses: actions/upload-pages-artifact@v3
