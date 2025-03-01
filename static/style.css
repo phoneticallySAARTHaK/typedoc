@@ -531,6 +531,9 @@
     a.tsd-anchor-link {
         color: var(--color-text);
     }
+    :target {
+        scroll-margin-block: calc(var(--dim-header-height) + 0.5rem);
+    }
 
     code,
     pre {
