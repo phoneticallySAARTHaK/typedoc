@@ -11,6 +11,11 @@ title: Changelog
 - Removed `jp` translations from `lang`, to migrate switch to `ja`.
 - File name references in `intentionallyNotExported` now use a package name/package relative path instead of an absolute path for matching.
 - The `source-order` sort ordering now considers package names / package relative paths instead of using the absolute paths to a file.
+- TypeDoc will only check for a project README file next to the discovered `package.json` file if `--readme` is not set
+  this change improves handling of monorepo setups where some packages have readme files and others do not, #2875.
+- Function-like variable exports will now only be automatically converted as function types if
+  they are initialized with a function expression. TypeDoc can be instructed to convert them as functions
+  with the `@function` tag, #2881.
 
 ### API Breaking Changes
 
@@ -38,19 +43,33 @@ title: Changelog
   control over export conversion order, #2856
 - Introduced `packagesRequiringDocumentation` option for `validation.notDocumented`, TypeDoc will expect comments to be present for symbols in the specified packages.
 - TypeDoc now exports a `typedoc/browser` entrypoint for parsing and using serialized JSON files, #2528.
+- Type `packageOptions` as `Partial<TypeDocOptions>`, #2878.
+- TypeDoc will now warn if an option which should only be set at the root level is set in `packageOptions`, #2878.
+- Introduced `@function` tag to force TypeDoc to convert variable declarations with a type annotation as functions, #2881.
+- Exposed a `TypeDoc` global object in the HTML theme which can be used to prevent TypeDoc from using `localStorage`, #2872.
 
 ### Bug Fixes
 
 - TypeDoc will now only create references for symbols re-exported from modules.
 - Variable-functions will now prefer placing the comment on the signature if there is only one signature present, #2824.
 - User filter settings will no longer sometimes cause the search to have fewer visible results than expected.
+- Fixed handling of expando functions which were also merged with a namespace, #2876.
 
 ### Thanks!
 
+- @jsmith2-coveo
 - @phoneticallySAARTHaK
 - @XeroAlpha
 
 ## Unreleased
+
+## v0.27.9 (2025-02-25)
+
+This will be the last v0.27.x release, see #2868 for discussion on the 0.28 beta.
+
+### Features
+
+- Added support for TypeScript 5.8
 
 ## v0.27.8 (2025-02-21)
 

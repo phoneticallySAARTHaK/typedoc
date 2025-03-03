@@ -17,7 +17,7 @@ import {
 import type { InlineTagDisplayPart } from "../lib/models/Comment.js";
 import { getConverter2App, getConverter2Project } from "./programs.js";
 import { TestLogger } from "./TestLogger.js";
-import { equalKind, getComment, getLinks, getSigComment, query, querySig } from "./utils.js";
+import { equalKind, getComment, getLinks, getSigComment, query, querySig, reflToTree } from "./utils.js";
 import { DefaultTheme, KindRouter, PageEvent } from "../index.js";
 
 const app = getConverter2App();
@@ -1121,9 +1121,9 @@ describe("Issue Tests", () => {
             return refl.signatures?.flatMap((sig) => sig.sources!.map((src) => src.line));
         };
 
-        equal(getLines("double"), [3]);
-        equal(getLines("foo"), [5]);
-        equal(getLines("all"), [8, 9]);
+        equal(getLines("double"), [4]);
+        equal(getLines("foo"), [6]);
+        equal(getLines("all"), [10, 11]);
     });
 
     it("#2320 Uses type parameters from parent class in arrow-methods, ", () => {
@@ -1987,5 +1987,30 @@ describe("Issue Tests", () => {
 
         ok(query(project, "B.definedInA").isReference());
         ok(!query(project, "B.definedInB").isReference());
+    });
+
+    it("#2876 converts both expando and namespace properties", () => {
+        const project = convert();
+
+        equal(reflToTree(project), {
+            "MyComponent": {
+                "Props": {
+                    "children": "Property",
+                },
+                "propTypes": "Variable",
+            },
+            "Function:MyComponent": "Function",
+        });
+    });
+
+    it("#2881 converts variables as functions if desired", () => {
+        const project = convert();
+
+        equal(reflToTree(project), {
+            Callable: "Interface",
+            fnByDefault: "Function",
+            fnByTag: "Function",
+            notFn: "Variable",
+        });
     });
 });

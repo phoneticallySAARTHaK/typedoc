@@ -53,7 +53,9 @@ type Modal = HTMLDialogElement;
  *
  * Adds workaround to fix scrolling issues caused by default browser behavior.
  *
- * **Note**: Do not use native `show`, `showModal` or `close` methods when using this.
+ * **Note**:
+ * - Do not use native `show`, `showModal` or `close` methods when using this.
+ * - `cancel` event is overridden.
  *
  * @param options Configure modal behavior
  * @param options.closeOnEsc Defaults to true
