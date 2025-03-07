@@ -519,6 +519,7 @@
     }
 
     a {
+        cursor: pointer;
         color: var(--color-link);
         text-decoration: none;
     }
@@ -1037,17 +1038,17 @@
     .tsd-accordion-summary {
         list-style-type: none; /* hide marker on non-safari */
         outline: none; /* broken on safari, so just hide it */
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        box-sizing: border-box;
     }
     .tsd-accordion-summary::-webkit-details-marker {
         display: none; /* hide marker on safari */
     }
     .tsd-accordion-summary,
     .tsd-accordion-summary a {
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
         user-select: none;
-
         cursor: pointer;
     }
     .tsd-accordion-summary a {
@@ -1058,10 +1059,6 @@
         margin-bottom: 0;
         padding-top: 0;
         padding-bottom: 0;
-    }
-    .tsd-accordion .tsd-accordion-summary > svg {
-        margin-left: 0.25rem;
-        vertical-align: text-top;
     }
     /*
      * We need to be careful to target the arrow indicating whether the accordion
@@ -1084,9 +1081,6 @@
     }
 
     .tsd-no-select {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
         user-select: none;
     }
     .tsd-kind-icon {
