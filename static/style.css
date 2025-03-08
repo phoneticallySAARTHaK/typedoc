@@ -376,10 +376,10 @@
     ::before,
     ::backdrop,
     ::file-selector-button {
-        box-sizing: border-box;
         margin: 0;
         padding: 0;
         border: 0 solid;
+        box-sizing: border-box;
     }
 
     html {
@@ -1053,7 +1053,6 @@
         padding: 0.25rem;
         color: var(--color-text);
         text-decoration: none;
-        box-sizing: border-box;
     }
     .tsd-navigation a.current,
     .tsd-page-navigation a.current {
@@ -1128,7 +1127,6 @@
         display: flex;
         align-items: center;
         gap: 0.25rem;
-        box-sizing: border-box;
     }
     .tsd-accordion-summary::-webkit-details-marker {
         display: none; /* hide marker on safari */
@@ -1233,7 +1231,6 @@
         will-change: max-height;
     }
     #tsd-search-input {
-        box-sizing: border-box;
         width: 100%;
         padding: 0 0.625rem; /* 10px */
         outline: 0;
@@ -1266,7 +1263,6 @@
     #tsd-search-results > li {
         background-color: var(--color-background);
         line-height: 1.5;
-        box-sizing: border-box;
         border-radius: 4px;
     }
     #tsd-search-results > li:nth-child(even) {
@@ -1281,7 +1277,6 @@
         display: flex;
         align-items: center;
         padding: 0.5rem 0.25rem;
-        box-sizing: border-box;
         width: 100%;
     }
     #tsd-search-results > li > a > .text {
@@ -1413,7 +1408,6 @@
     }
 
     .tsd-widget {
-        box-sizing: border-box;
         display: inline-block;
         opacity: 0.8;
         height: 2.5rem;
