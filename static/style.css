@@ -1,11 +1,6 @@
 @layer typedoc {
     :root {
-        --dim-toolbar-contents-height: 2.5rem;
-        --dim-toolbar-border-bottom-width: 1px;
-        --dim-header-height: calc(
-            var(--dim-toolbar-border-bottom-width) +
-                var(--dim-toolbar-contents-height)
-        );
+        --dim-header-height: 2.5rem;
 
         /* 0rem For mobile; unit is required for calculation in `calc` */
         --dim-container-main-margin-y: 0rem;
@@ -698,12 +693,14 @@
 
     footer {
         border-top: 1px solid var(--color-accent);
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        max-height: var(--dim-footer-height);
+        height: var(--dim-footer-height);
     }
-    footer > p {
-        margin: 0 1em;
+    footer > .container {
+        margin: 0 auto;
+        padding: 1rem 0;
+        display: flex;
+        align-items: center;
+        height: 100%;
     }
 
     .container-main {
@@ -1397,9 +1394,7 @@
         width: 100%;
         color: var(--color-text);
         background: var(--color-background-secondary);
-        border-bottom: var(--dim-toolbar-border-bottom-width)
-            var(--color-accent) solid;
-        transition: transform 0.3s ease-in-out;
+        border-bottom: 1px var(--color-accent) solid;
     }
     .tsd-page-toolbar a {
         color: var(--color-text);
@@ -1407,7 +1402,7 @@
     .tsd-toolbar-contents {
         display: flex;
         align-items: center;
-        height: var(--dim-toolbar-contents-height);
+        height: var(--dim-header-height);
         margin: 0 auto;
     }
     .tsd-toolbar-contents > .title {
