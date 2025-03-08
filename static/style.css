@@ -1013,19 +1013,8 @@
         font-weight: normal;
     }
 
-    .tsd-anchor {
-        position: relative;
-        top: -100px;
-    }
-
     .tsd-member {
         position: relative;
-    }
-    .tsd-member .tsd-anchor + h3 {
-        display: flex;
-        align-items: center;
-        margin-top: 0;
-        margin-bottom: 0;
     }
 
     .tsd-navigation.settings {
