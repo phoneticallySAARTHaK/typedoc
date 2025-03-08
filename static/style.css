@@ -875,7 +875,6 @@
         cursor: pointer;
     }
     .tsd-filter-input input[type="checkbox"] {
-        cursor: pointer;
         position: absolute;
         width: 1.5em;
         height: 1.5em;
@@ -885,7 +884,6 @@
         pointer-events: none;
     }
     .tsd-filter-input svg {
-        cursor: pointer;
         width: 1.5em;
         height: 1.5em;
         margin-right: 0.5em;
@@ -1397,7 +1395,6 @@
         width: 2.5rem;
         transition: opacity 0.1s, background-color 0.1s;
         text-align: center;
-        cursor: pointer;
         background-color: transparent;
     }
     .tsd-widget:hover {
