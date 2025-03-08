@@ -559,6 +559,18 @@
     [hidden]:where(:not([hidden="until-found"])) {
         display: none !important;
     }
+    summary {
+        list-style-type: none; /* hide marker on non-safari */
+        outline: none; /* broken on safari, so just hide it */
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        cursor: pointer;
+        appearance: button;
+    }
+    summary::-webkit-details-marker {
+        display: none; /* hide marker on safari */
+    }
 
     h1,
     h2,
@@ -1101,16 +1113,6 @@
         display: inline-flex;
         align-items: center;
         color: var(--color-text);
-    }
-    .tsd-accordion-summary {
-        list-style-type: none; /* hide marker on non-safari */
-        outline: none; /* broken on safari, so just hide it */
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-    }
-    .tsd-accordion-summary::-webkit-details-marker {
-        display: none; /* hide marker on safari */
     }
     .tsd-accordion-summary,
     .tsd-accordion-summary a {
