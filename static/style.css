@@ -436,7 +436,7 @@
     a {
         color: var(--color-link);
         -webkit-text-decoration: inherit;
-        text-decoration: none;
+        text-decoration: inherit;
     }
     a:hover {
         text-decoration: underline;
@@ -879,12 +879,8 @@
     }
     .tsd-filter-input {
         display: flex;
-        width: -moz-fit-content;
         width: fit-content;
         align-items: center;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
         user-select: none;
         cursor: pointer;
     }
@@ -1012,11 +1008,7 @@
         }
     }
     .tsd-index-panel .tsd-index-list li {
-        -webkit-page-break-inside: avoid;
-        -moz-page-break-inside: avoid;
-        -ms-page-break-inside: avoid;
-        -o-page-break-inside: avoid;
-        page-break-inside: avoid;
+        break-inside: avoid;
     }
 
     .tsd-flag {
@@ -1148,11 +1140,6 @@
     }
     .tsd-accordion-summary,
     .tsd-accordion-summary a {
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-
         cursor: pointer;
     }
     .tsd-accordion-summary a {
@@ -1183,9 +1170,6 @@
     }
 
     .tsd-no-select {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
         user-select: none;
     }
     .tsd-kind-icon {
