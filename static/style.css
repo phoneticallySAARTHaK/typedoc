@@ -442,7 +442,7 @@
         text-decoration: underline;
     }
     a:active {
-        text-decoration: underline;
+        text-decoration: none;
     }
     a.external[target="_blank"] {
         background-image: var(--external-icon);
