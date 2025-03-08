@@ -1251,10 +1251,6 @@
         border-color: transparent;
         color: var(--color-contrast-text);
     }
-    #tsd-search-input::placeholder {
-        color: inherit;
-        opacity: 0.8;
-    }
     #tsd-search-results {
         margin: 0;
         padding: 0;
