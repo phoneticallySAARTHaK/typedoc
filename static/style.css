@@ -635,7 +635,6 @@
     }
 
     dialog {
-        border: none;
         outline: none;
         padding: 0;
         background-color: var(--color-background);
@@ -1036,7 +1035,6 @@
         align-items: center;
         margin-top: 0;
         margin-bottom: 0;
-        border-bottom: none;
     }
 
     .tsd-navigation.settings {
@@ -1202,7 +1200,6 @@
     .tsd-panel > h2.tsd-before-signature,
     .tsd-panel > h3.tsd-before-signature {
         margin-bottom: 0;
-        border-bottom: none;
     }
 
     .tsd-panel-group {
@@ -1433,7 +1430,6 @@
         transition: opacity 0.1s, background-color 0.1s;
         text-align: center;
         cursor: pointer;
-        border: none;
         background-color: transparent;
     }
     .tsd-widget:hover {
